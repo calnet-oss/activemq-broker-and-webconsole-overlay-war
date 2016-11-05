@@ -31,6 +31,13 @@ If you need a starting point for your configuration files, use the
 distribution in the `conf` directory.  If you use the stock `activemq.xml`,
 you'll need to set the `activemq.data` system property as well.
 
+I also had to make the following modifications to the stock activemq.xml:
+* Delete the logQuery bean
+* Comment out transports that weren't in use.  I only configured the
+openwire transport.
+* Delete the shutdownHooks section
+* Delete the import of jetty.xml
+
 ## Building the WAR
 
 Run:
@@ -39,3 +46,12 @@ mvn package
 ```
 
 The WAR ends up in the `target` directory.
+
+## Tomcat and JSTL
+
+For Tomcat, I had to download the following JARs into the Tomcat
+`webapps/activemq-admin/WEB-INF/lib` directory (activemq-admin is this WAR
+file renamed and unpacked).
+* [jstl-1.2.jar](http://central.maven.org/maven2/javax/servlet/jstl/1.2/jstl-1.2.jar)
+* [taglibs-standard-spec-1.2.5.jar](http://central.maven.org/maven2/org/apache/taglibs/taglibs-standard-spec/1.2.5/taglibs-standard-spec-1.2.5.jar)
+* [taglibs-standard-impl-1.2.5.jar](http://central.maven.org/maven2/org/apache/taglibs/taglibs-standard-impl/1.2.5/taglibs-standard-impl-1.2.5.jar)
