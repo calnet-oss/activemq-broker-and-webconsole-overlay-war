@@ -1,0 +1,46 @@
+<project>
+    <modelVersion>4.0.0</modelVersion>
+    <groupId>edu.berkeley.calnet.activemq</groupId>
+    <artifactId>activemq-broker-and-webconsole-overlay</artifactId>
+    <!-- version corresponds to activemq version -->
+    <version>5.14.1</version>
+    <packaging>war</packaging>
+    <name>activemq-broker-and-webconsole-overlay-war</name>
+    <description>
+        ActiveMQ Broker and Admin Console as a WAR file that can be deployed
+        in a servlet container configured by an external activemq.xml.
+    </description>
+
+    <dependencies>
+        <dependency>
+            <groupId>org.apache.activemq</groupId>
+            <artifactId>activemq-web-console</artifactId>
+            <version>5.14.1</version>
+            <type>war</type>
+            <scope>runtime</scope>
+        </dependency>
+    </dependencies>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-war-plugin</artifactId>
+                <version>3.0.0</version>
+                <configuration>
+                    <overlays>
+                        <overlay>
+                            <groupId>org.apache.activemq</groupId>
+                            <artifactId>activemq-web-console</artifactId>
+                            <excludes>
+                                <exclude>WEB-INF/webconsole-embedded.xml</exclude>
+                                <exclude>WEB-INF/activemq.xml</exclude>
+                            </excludes>
+                        </overlay>
+                    </overlays>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+
+</project>
