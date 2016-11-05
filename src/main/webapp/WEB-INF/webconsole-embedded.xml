@@ -34,7 +34,7 @@
   </bean>
 
   <bean id="brokerService" class="org.apache.activemq.xbean.BrokerFactoryBean">
-    <property name="config" value="${activemq.conf}/activemq.conf"/>
+    <property name="config" value="${activemq.conf}/activemq.xml"/>
   </bean>
   <bean id="brokerURL" factory-bean="brokerService" factory-method="getVmConnectorURI"/>
 

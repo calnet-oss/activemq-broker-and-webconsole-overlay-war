@@ -28,7 +28,8 @@ simple URL like http://localhost/activemq-admin.
 
 If you need a starting point for your configuration files, use the
 `activemq.xml` and `credentials.properties` files from the binary ActiveMQ
-distribution in the `conf` directory.
+distribution in the `conf` directory.  If you use the stock `activemq.xml`,
+you'll need to set the `activemq.data` system property as well.
 
 ## Building the WAR
 
