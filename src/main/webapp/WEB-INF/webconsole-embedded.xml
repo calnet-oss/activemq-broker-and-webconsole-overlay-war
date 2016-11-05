@@ -33,8 +33,11 @@
   	<property name="connectionFactory" ref="connectionFactory"/>
   </bean>
 
+  <bean id="brokerServiceConfigResource" class="org.springframework.core.io.FileSystemResource">
+    <constructor-arg value="${activemq.conf}/activemq.xml"/>
+  </bean>
   <bean id="brokerService" class="org.apache.activemq.xbean.BrokerFactoryBean">
-    <property name="config" value="${activemq.conf}/activemq.xml"/>
+    <property name="config" ref="brokerServiceConfigResource"/>
   </bean>
   <bean id="brokerURL" factory-bean="brokerService" factory-method="getVmConnectorURI"/>
 
