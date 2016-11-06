@@ -47,11 +47,15 @@ mvn package
 
 The WAR ends up in the `target` directory.
 
-## Tomcat and JSTL
+## App Servers like Tomcat without JSTL
 
-For Tomcat, I had to download the following JARs into the Tomcat
-`webapps/activemq-admin/WEB-INF/lib` directory (activemq-admin is this WAR
-file renamed and unpacked).
-* [jstl-1.2.jar](http://central.maven.org/maven2/javax/servlet/jstl/1.2/jstl-1.2.jar)
-* [taglibs-standard-spec-1.2.5.jar](http://central.maven.org/maven2/org/apache/taglibs/taglibs-standard-spec/1.2.5/taglibs-standard-spec-1.2.5.jar)
-* [taglibs-standard-impl-1.2.5.jar](http://central.maven.org/maven2/org/apache/taglibs/taglibs-standard-impl/1.2.5/taglibs-standard-impl-1.2.5.jar)
+Tomcat doesn't ship with JSTL dependencies (and possibly other application
+servers), so if you're deploying the WAR to an application server without
+JSTL, do this here:
+```
+mvn install
+cd with-jstl-overlay
+mvn package
+```
+
+Deploy the war in the `target` directory to your application server.
