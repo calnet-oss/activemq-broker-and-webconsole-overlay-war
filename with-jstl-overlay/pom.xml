@@ -3,7 +3,7 @@
     <groupId>edu.berkeley.calnet.activemq</groupId>
     <artifactId>activemq-broker-and-webconsole-overlay-with-jstl</artifactId>
     <!-- version corresponds to activemq version -->
-    <version>5.14.1</version>
+    <version>5.15.0</version>
     <packaging>war</packaging>
     <name>activemq-broker-and-webconsole-overlay-war-with-jstl</name>
     <description>
@@ -17,7 +17,7 @@
         <dependency>
             <groupId>edu.berkeley.calnet.activemq</groupId>
             <artifactId>activemq-broker-and-webconsole-overlay</artifactId>
-            <version>5.14.1</version>
+            <version>5.15.0</version>
             <type>war</type>
             <scope>runtime</scope>
         </dependency>
