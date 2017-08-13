@@ -1,0 +1,51 @@
+apply plugin: 'java'
+apply plugin: 'war'
+apply plugin: 'maven-publish'
+
+group = 'edu.berkeley.calnet.activemq'
+version = ACTIVEMQ_VERSION
+
+sourceCompatibility = 1.7
+targetCompatibility = 1.7
+
+repositories {
+    mavenLocal()
+    maven {
+        url 'https://maven.calnet.berkeley.edu/artifactory/all/'
+        credentials {
+            username calnet_deploy_user
+            password calnet_deploy_password
+        }
+    }
+    jcenter()
+    mavenCentral()
+}
+
+dependencies {
+    runtime group: 'org.apache.activemq', name: 'activemq-web-console', version: ACTIVEMQ_VERSION
+}
+
+// publishing with './gradlew publish'
+publish.dependsOn assemble
+publishToMavenLocal.dependsOn assemble
+publishing {
+    publications {
+        maven(MavenPublication) {
+            artifactId project.name
+            from components.java
+        }
+    }
+
+    repositories {
+        maven {
+            // Put the property settings in ~/.gradle/gradle.properties for
+            // default_deploy_url, default_deploy_lib_repo
+            // default_deploy_username and default_deploy_password.
+            url "${project.property('default_deploy_url')}/${default_deploy_lib_repo}"
+            credentials {
+                username project.property("default_deploy_user")
+                password project.property("default_deploy_password")
+            }
+        }
+    }
+}
