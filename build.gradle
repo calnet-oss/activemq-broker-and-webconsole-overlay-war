@@ -8,22 +8,24 @@ version = ACTIVEMQ_VERSION
 sourceCompatibility = 1.7
 targetCompatibility = 1.7
 
-repositories {
-    mavenLocal()
-    // If using a Maven proxy, put the property settings in
-    // ~/.gradle/gradle.properties for default_proxy_url,
-    // default_proxy_username and default_proxy_password.
-    if (project.hasProperty("default_proxy_url")) {
-        maven {
-            url project.property("default_proxy_url")
-            credentials {
-                username project.property("default_proxy_username")
-                password project.property("default_proxy_password")
+allprojects {
+    repositories {
+        mavenLocal()
+        // If using a Maven proxy, put the property settings in
+        // ~/.gradle/gradle.properties for default_proxy_url,
+        // default_proxy_username and default_proxy_password.
+        if (project.hasProperty("default_proxy_url")) {
+            maven {
+                url project.property("default_proxy_url")
+                credentials {
+                    username project.property("default_proxy_username")
+                    password project.property("default_proxy_password")
+                }
             }
         }
+        jcenter()
+        mavenCentral()
     }
-    jcenter()
-    mavenCentral()
 }
 
 dependencies {
