@@ -42,20 +42,13 @@ openwire transport.
 
 Run:
 ```
-mvn package
+./gradlew war
 ```
 
-The WAR ends up in the `target` directory.
+The WAR ends up in the `builds/lib` directory.
 
 ## App Servers like Tomcat without JSTL
 
 Tomcat doesn't ship with JSTL dependencies (and possibly other application
 servers), so if you're deploying the WAR to an application server without
-JSTL, do this here:
-```
-mvn install
-cd with-jstl-overlay
-mvn package
-```
-
-Deploy the war in the `target` directory to your application server.
+JSTL, use the WAR file from `with-jstl-overlay/builds/lib`.
