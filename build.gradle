@@ -40,6 +40,8 @@ publishing {
     publications {
         maven(MavenPublication) {
             artifactId project.name
+            version projectVersion
+            group projectGroup
             from components.web
         }
     }

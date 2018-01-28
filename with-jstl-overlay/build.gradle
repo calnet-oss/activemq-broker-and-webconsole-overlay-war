@@ -2,8 +2,8 @@ apply plugin: 'java'
 apply plugin: 'war'
 apply plugin: 'maven-publish'
 
-group = 'edu.berkeley.calnet.activemq'
-version = ACTIVEMQ_VERSION
+group projectGroup
+version projectVersion
 
 sourceCompatibility = 1.7
 targetCompatibility = 1.7
@@ -24,6 +24,8 @@ publishing {
     publications {
         maven(MavenPublication) {
             artifactId project.name
+            version projectVersion
+            group projectGroup
             from components.web
         }
     }
