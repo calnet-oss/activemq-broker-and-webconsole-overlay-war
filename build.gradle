@@ -2,8 +2,9 @@ apply plugin: 'java'
 apply plugin: 'war'
 apply plugin: 'maven-publish'
 
-group = 'edu.berkeley.calnet.activemq'
-version = ACTIVEMQ_VERSION
+# ActiveMQ version
+version projectVersion
+group projectGroup
 
 sourceCompatibility = 1.8
 targetCompatibility = 1.8
@@ -29,7 +30,7 @@ allprojects {
 }
 
 dependencies {
-    runtime group: 'org.apache.activemq', name: 'activemq-web-console', version: ACTIVEMQ_VERSION
+    runtime group: 'org.apache.activemq', name: 'activemq-web-console', version: projectVersion
 }
 
 // publishing with './gradlew publish'
