@@ -1,6 +1,6 @@
 # ActiveMQ Broker and Admin Console as a WAR file
 
-This project is a simple maven overlay over the standard ActiveMQ Web
+This project is a simple Gradle overlay over the standard ActiveMQ Web
 Console WAR.  The modifications are minimal and are limited to
 configuration.
 

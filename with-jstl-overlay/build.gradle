@@ -1,5 +1,6 @@
 apply plugin: 'java'
 apply plugin: 'war'
+apply plugin: 'waroverlay'
 apply plugin: 'maven-publish'
 
 group projectGroup
@@ -9,7 +10,9 @@ sourceCompatibility = 1.7
 targetCompatibility = 1.7
 
 dependencies {
-    compile project(':')
+    compile(project(':')) {
+        transitive = true
+    }
     runtime(group: 'javax.servlet', name: 'jstl', version: '1.2') {
         exclude(module: 'jsp-api')
     }
@@ -42,4 +45,8 @@ publishing {
             }
         }
     }
+}
+
+war {
+    exclude "WEB-INF/activemq.xml"
 }

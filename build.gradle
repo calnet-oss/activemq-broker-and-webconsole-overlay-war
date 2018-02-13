@@ -1,5 +1,30 @@
+// https://github.com/scalding/gradle-waroverlay-plugin
+buildscript {
+    repositories {
+        mavenLocal()
+        // If using a Maven proxy, put the property settings in
+        // ~/.gradle/gradle.properties for default_proxy_url,
+        // default_proxy_username and default_proxy_password.
+        if (project.hasProperty("default_proxy_url")) {
+            maven {
+                url project.property("default_proxy_url")
+                credentials {
+                    username project.property("default_proxy_username")
+                    password project.property("default_proxy_password")
+                }
+            }
+        }
+        jcenter()
+        mavenCentral()
+    }
+    dependencies {
+        classpath "org.scaldingspoon.gradle:gradle-waroverlay-plugin:0.9.3"
+    }
+}
+
 apply plugin: 'java'
 apply plugin: 'war'
+apply plugin: 'waroverlay'
 apply plugin: 'maven-publish'
 
 // ActiveMQ version
@@ -30,7 +55,13 @@ allprojects {
 }
 
 dependencies {
-    runtime group: 'org.apache.activemq', name: 'activemq-web-console', version: projectVersion
+    runtime(group: 'org.apache.activemq', name: 'activemq-web-console', version: projectVersion) {
+        transitive = true
+    }
+}
+
+war {
+    exclude "WEB-INF/activemq.xml"
 }
 
 // publishing with './gradlew publish'
