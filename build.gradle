@@ -92,3 +92,7 @@ publishing {
         }
     }
 }
+
+def pdep(String depstr) {
+    return (depstr.startsWith(":") ? project(depstr) : depstr)
+}
