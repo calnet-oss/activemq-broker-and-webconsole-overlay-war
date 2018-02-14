@@ -7,14 +7,15 @@ sourceCompatibility = 1.8
 targetCompatibility = 1.8
 
 dependencies {
-    compile(pdep(rootProject.activemqBrokerAndWebconsoleOverlayWarDep)) {
+    runtime(group: 'org.apache.activemq', name: 'activemq-web-console', version: projectVersion) {
         transitive = true
     }
-    runtime(group: 'javax.servlet', name: 'jstl', version: '1.2') {
-        exclude(module: 'jsp-api')
-    }
-    runtime group: 'org.apache.taglibs', name: 'taglibs-standard-spec', version: '1.2.5'
-    runtime group: 'org.apache.taglibs', name: 'taglibs-standard-impl', version: '1.2.5'
+    runtime group: 'org.apache.derby', name: 'derby', version: '10.14.1.0'
+    runtime group: 'org.apache.commons', name: 'commons-dbcp2', version: '2.2.0'
+}
+
+war {
+    exclude "WEB-INF/activemq.xml"
 }
 
 // publishing with './gradlew publish'
@@ -23,7 +24,7 @@ publishToMavenLocal.dependsOn assemble
 publishing {
     publications {
         maven(MavenPublication) {
-            artifactId "activemq-broker-and-webconsole-with-jstl-overlay"
+            artifactId parent.name
             version projectVersion
             groupId projectGroup
             from components.web
@@ -33,17 +34,13 @@ publishing {
     repositories {
         maven {
             // Put the property settings in ~/.gradle/gradle.properties for
-            // default_deploy_url, default_deploy_lib_repo
+            // default_deploy_url, default_deploy_lib_release_repo
             // default_deploy_username and default_deploy_password.
-            url "${project.property('default_deploy_url')}/${default_deploy_lib_repo}"
+            url "${project.property('default_deploy_url')}/${default_deploy_lib_release_repo}"
             credentials {
                 username project.property("default_deploy_user")
                 password project.property("default_deploy_password")
             }
         }
     }
-}
-
-war {
-    exclude "WEB-INF/activemq.xml"
 }

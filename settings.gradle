@@ -1,2 +1,2 @@
 rootProject.name = 'activemq-broker-and-webconsole-overlay'
-include 'with-jstl-overlay'
+include 'standard-overlay', 'with-jstl-overlay'

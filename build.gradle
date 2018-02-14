@@ -22,17 +22,9 @@ buildscript {
     }
 }
 
-apply plugin: 'java'
-apply plugin: 'war'
-apply plugin: 'waroverlay'
-apply plugin: 'maven-publish'
-
 // ActiveMQ version
 version projectVersion
 group projectGroup
-
-sourceCompatibility = 1.8
-targetCompatibility = 1.8
 
 allprojects {
     repositories {
@@ -51,45 +43,6 @@ allprojects {
         }
         jcenter()
         mavenCentral()
-    }
-}
-
-dependencies {
-    runtime(group: 'org.apache.activemq', name: 'activemq-web-console', version: projectVersion) {
-        transitive = true
-    }
-    runtime group: 'org.apache.derby', name: 'derby', version: '10.14.1.0'
-    runtime group: 'org.apache.commons', name: 'commons-dbcp2', version: '2.2.0'
-}
-
-war {
-    exclude "WEB-INF/activemq.xml"
-}
-
-// publishing with './gradlew publish'
-publish.dependsOn assemble
-publishToMavenLocal.dependsOn assemble
-publishing {
-    publications {
-        maven(MavenPublication) {
-            artifactId project.name
-            version projectVersion
-            groupId projectGroup
-            from components.web
-        }
-    }
-
-    repositories {
-        maven {
-            // Put the property settings in ~/.gradle/gradle.properties for
-            // default_deploy_url, default_deploy_lib_release_repo
-            // default_deploy_username and default_deploy_password.
-            url "${project.property('default_deploy_url')}/${default_deploy_lib_release_repo}"
-            credentials {
-                username project.property("default_deploy_user")
-                password project.property("default_deploy_password")
-            }
-        }
     }
 }
 
