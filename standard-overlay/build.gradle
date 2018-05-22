@@ -11,6 +11,8 @@ dependencies {
         transitive = true
     }
     runtime group: 'org.apache.derby', name: 'derby', version: '10.14.1.0'
+    runtime group: 'org.apache.derby', name: 'derbyclient', version: '10.14.1.0'
+    runtime group: 'org.apache.derby', name: 'derbynet', version: '10.14.1.0'
     runtime group: 'org.apache.commons', name: 'commons-dbcp2', version: '2.2.0'
 }
 
