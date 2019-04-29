@@ -9,6 +9,8 @@ targetCompatibility = 1.8
 dependencies {
     runtime(group: 'org.apache.activemq', name: 'activemq-web-console', version: projectVersion) {
         transitive = true
+        // has bad pom file and doesn't seem to be needed
+        exclude(group: "org.apache.geronimo.specs", module: "geronimo-jta_1.0.1B_spec")
     }
     runtime group: 'org.apache.derby', name: 'derby', version: '10.14.1.0'
     runtime group: 'org.apache.derby', name: 'derbyclient', version: '10.14.1.0'
