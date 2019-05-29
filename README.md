@@ -2,7 +2,8 @@
 
 This project is a simple Gradle overlay over the standard ActiveMQ Web
 Console WAR.  The modifications are minimal and are limited to
-configuration.
+configuration.  [Apache Derby](https://db.apache.org/derby/) dependencies
+are included for those who wish to use Derby as a storage backend.
 
 This modifies `WEB-INF/webconsole-embedded.xml` in the WAR and removes
 `WEB-INF/activemq.xml` from the WAR.
@@ -35,7 +36,6 @@ I also had to make the following modifications to the stock activemq.xml:
 * Delete the logQuery bean
 * Comment out transports that weren't in use.  I only configured the
 openwire transport.
-* Delete the shutdownHooks section
 * Delete the import of jetty.xml
 
 ## Building the WAR
@@ -52,3 +52,24 @@ The WAR ends up in the `builds/lib` directory.
 Tomcat doesn't ship with JSTL dependencies (and possibly other application
 servers), so if you're deploying the WAR to an application server without
 JSTL, use the WAR file from `with-jstl-overlay/builds/lib`.
+
+## Apache Derby (optional)
+
+This isn't an exhaustive section on how to configure ActiveMQ to use JDBC
+and Derby (see ActiveMQ documentation for that), but there are a few key
+things to note if you're using Derby.
+
+You'll want to set the `derby.system.home` system property and you'll want a
+`derby.properties` file in that directory that looks something like this:
+```
+derby.drda.startNetworkServer=true
+derby.drda.minThreads=1
+```
+
+Add the `DerbyShutdownHook` to your activemq.xml:
+```
+        <shutdownHooks>
+            <bean xmlns="http://www.springframework.org/schema/beans" class="edu.berkeley.activemq.hooks.DerbyShutdownHook" />
+            <bean xmlns="http://www.springframework.org/schema/beans" class="org.apache.activemq.hooks.SpringContextHook" />
+        </shutdownHooks>
+```
