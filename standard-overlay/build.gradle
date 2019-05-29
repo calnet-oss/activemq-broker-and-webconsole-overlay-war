@@ -12,10 +12,27 @@ dependencies {
         // has bad pom file and doesn't seem to be needed
         exclude(group: "org.apache.geronimo.specs", module: "geronimo-jta_1.0.1B_spec")
     }
-    runtime group: 'org.apache.derby', name: 'derby', version: '10.14.1.0'
-    runtime group: 'org.apache.derby', name: 'derbyclient', version: '10.14.1.0'
-    runtime group: 'org.apache.derby', name: 'derbynet', version: '10.14.1.0'
+    def derbyVersion = '10.14.2.0'
+    runtime group: 'org.apache.derby', name: 'derby', version: derbyVersion
+    runtime group: 'org.apache.derby', name: 'derbyclient', version: derbyVersion
+    runtime group: 'org.apache.derby', name: 'derbynet', version: derbyVersion
     runtime group: 'org.apache.commons', name: 'commons-dbcp2', version: '2.2.0'
+
+    // I don't know why, but Derby doesn't work without all (or, some, at
+    // least) of the Locale dependencies.
+    runtime group: 'org.apache.derby', name: 'derbyLocale_cs', version: derbyVersion
+    runtime group: 'org.apache.derby', name: 'derbyLocale_de_DE', version: derbyVersion
+    runtime group: 'org.apache.derby', name: 'derbyLocale_es', version: derbyVersion
+    runtime group: 'org.apache.derby', name: 'derbyLocale_fr', version: derbyVersion
+    runtime group: 'org.apache.derby', name: 'derbyLocale_hu', version: derbyVersion
+    runtime group: 'org.apache.derby', name: 'derbyLocale_it', version: derbyVersion
+    runtime group: 'org.apache.derby', name: 'derbyLocale_ja_JP', version: derbyVersion
+    runtime group: 'org.apache.derby', name: 'derbyLocale_ko_KR', version: derbyVersion
+    runtime group: 'org.apache.derby', name: 'derbyLocale_pl', version: derbyVersion
+    runtime group: 'org.apache.derby', name: 'derbyLocale_pt_BR', version: derbyVersion
+    runtime group: 'org.apache.derby', name: 'derbyLocale_ru', version: derbyVersion
+    runtime group: 'org.apache.derby', name: 'derbyLocale_zh_CN', version: derbyVersion
+    runtime group: 'org.apache.derby', name: 'derbyLocale_zh_TW', version: derbyVersion
 }
 
 war {
