@@ -10,11 +10,11 @@ dependencies {
     compile(pdep(rootProject.activemqBrokerAndWebconsoleOverlayWarDep)) {
         transitive = true
     }
-    runtime(group: 'javax.servlet', name: 'jstl', version: '1.2') {
+    runtimeOnly(group: 'javax.servlet', name: 'jstl', version: '1.2') {
         exclude(module: 'jsp-api')
     }
-    runtime group: 'org.apache.taglibs', name: 'taglibs-standard-spec', version: '1.2.5'
-    runtime group: 'org.apache.taglibs', name: 'taglibs-standard-impl', version: '1.2.5'
+    runtimeOnly group: 'org.apache.taglibs', name: 'taglibs-standard-spec', version: '1.2.5'
+    runtimeOnly group: 'org.apache.taglibs', name: 'taglibs-standard-impl', version: '1.2.5'
 }
 
 // publishing with './gradlew publish'
