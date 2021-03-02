@@ -181,6 +181,7 @@
   
   <login-config>
     <auth-method>BASIC</auth-method>
+    <realm-name>AMQ Webconsole</realm-name>
   </login-config>
 
   <security-role>
