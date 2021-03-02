@@ -5,8 +5,8 @@ Console WAR.  The modifications are minimal and are limited to
 configuration.  [Apache Derby](https://db.apache.org/derby/) dependencies
 are included for those who wish to use Derby as a storage backend.
 
-This modifies `WEB-INF/webconsole-embedded.xml` in the WAR and removes
-`WEB-INF/activemq.xml` from the WAR.
+This modifies `WEB-INF/webconsole-embedded.xml` and `WEB-INF/web.xml` in the
+WAR and removes `WEB-INF/activemq.xml` from the WAR.
 
 `webconsole-embedded.xml` is modified so that the `activemq.xml` config file
 is found in a directory specified with the `activemq.conf` system property
@@ -16,6 +16,11 @@ is found in a directory specified with the `activemq.conf` system property
 binary assembly distribution of ActiveMQ.  If you're curious, you can see
 this version in the ActiveMQ source code in
 `assembly/src/release/webapps/admin/WEB-INF/webconsole-embedded.xml`.
+
+`web.xml` is modified to enable container authentication for the web
+console.  The original `web.xml` is located in the ActiveMQ source code in
+`activemq-web-console/src/main/webapp/WEB-INF/web.xml`.  See the Webconsole
+Authentication section for more info on securing the web console.
 
 You can deploy this WAR file in your application server and launch the JVM
 with `-Dactivemq.conf` to specify the directory location containing your
@@ -72,4 +77,22 @@ Add the `DerbyShutdownHook` to your activemq.xml:
             <bean xmlns="http://www.springframework.org/schema/beans" class="edu.berkeley.activemq.hooks.DerbyShutdownHook" />
             <bean xmlns="http://www.springframework.org/schema/beans" class="org.apache.activemq.hooks.SpringContextHook" />
         </shutdownHooks>
+```
+
+## Webconsole Authentication
+
+The `web.xml` file in the WAR enables container authentication using the
+`BASIC` authentication method using the `amq-admin` role.  If deploying this
+WAR to a Tomcat application server, edit the `tomcat-users.xml` file to
+establish a username and password for the web console.  Note the role name
+must be `amq-admin` (to match what is in `web.xml`), but the username can be
+anything and you can have multiple users with the `amq-admin` role.  For
+other application servers, consult the app server's documentation for how to
+add users and passwords for container authentication.
+
+```
+<tomcat-users>
+  <role rolename="amq-admin"/>
+  <user username="amq-admin" password="CHANGEME" roles="amq-admin"/
+</tomcat-users>
 ```
