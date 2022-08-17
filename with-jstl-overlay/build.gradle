@@ -1,18 +1,17 @@
 apply plugin: 'java'
 apply plugin: 'war'
-apply plugin: 'waroverlay'
+apply plugin: "io.freefair.war-overlay"
 apply plugin: 'maven-publish'
 
 sourceCompatibility = 1.8
 targetCompatibility = 1.8
 
 dependencies {
-    compile(pdep(rootProject.activemqBrokerAndWebconsoleOverlayWarDep)) {
-        transitive = true
-    }
+    // https://mvnrepository.com/artifact/javax.servlet/jstl
     runtimeOnly(group: 'javax.servlet', name: 'jstl', version: '1.2') {
         exclude(module: 'jsp-api')
     }
+    // https://mvnrepository.com/artifact/org.apache.taglibs/taglibs-standard-spec
     runtimeOnly group: 'org.apache.taglibs', name: 'taglibs-standard-spec', version: '1.2.5'
     runtimeOnly group: 'org.apache.taglibs', name: 'taglibs-standard-impl', version: '1.2.5'
 }
@@ -33,9 +32,9 @@ publishing {
     repositories {
         maven {
             // Put the property settings in ~/.gradle/gradle.properties for
-            // default_deploy_url, default_deploy_lib_repo
-            // default_deploy_username and default_deploy_password.
-            url "${project.property('default_deploy_url')}/${default_deploy_lib_release_repo}"
+            // default_deploy_url, calnet_deploy_lib_repo,
+            // default_deploy_user and default_deploy_password.
+            url "${project.property('default_deploy_url')}/${calnet_deploy_lib_repo}"
             credentials {
                 username project.property("default_deploy_user")
                 password project.property("default_deploy_password")
@@ -45,5 +44,11 @@ publishing {
 }
 
 war {
-    exclude "WEB-INF/activemq.xml"
+    // https://docs.freefair.io/gradle-plugins/current/reference/#_io_freefair_war_overlay
+    overlays {
+        activemq {
+            from pdep(rootProject.activemqBrokerAndWebconsoleOverlayWarDep)
+            excludes = ["WEB-INF/activemq.xml"]
+        }
+    }
 }
