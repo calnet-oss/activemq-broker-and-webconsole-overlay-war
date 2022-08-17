@@ -7,6 +7,8 @@ sourceCompatibility = 1.8
 targetCompatibility = 1.8
 
 dependencies {
+    runtimeOnly group: 'org.apache.activemq', name: 'activemq-jdbc-store', version: projectVersion
+
     // https://mvnrepository.com/artifact/org.apache.derby/derby
     def derbyVersion = '10.16.1.1'
     runtimeOnly group: 'org.apache.derby', name: 'derby', version: derbyVersion
