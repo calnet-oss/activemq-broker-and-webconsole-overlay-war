@@ -1,19 +1,22 @@
-apply plugin: 'java'
-apply plugin: 'war'
-apply plugin: "io.freefair.war-overlay"
-apply plugin: 'maven-publish'
+plugins {
+    id 'java'
+    id 'war'
+    id 'maven-publish'
+}
 
-sourceCompatibility = 1.8
-targetCompatibility = 1.8
+apply plugin: "io.freefair.war-overlay"
+
+java {
+    toolchain {
+        languageVersion = JavaLanguageVersion.of(17)
+    }
+}
 
 dependencies {
-    // https://mvnrepository.com/artifact/javax.servlet/jstl
-    runtimeOnly(group: 'javax.servlet', name: 'jstl', version: '1.2') {
-        exclude(module: 'jsp-api')
-    }
-    // https://mvnrepository.com/artifact/org.apache.taglibs/taglibs-standard-spec
-    runtimeOnly group: 'org.apache.taglibs', name: 'taglibs-standard-spec', version: '1.2.5'
-    runtimeOnly group: 'org.apache.taglibs', name: 'taglibs-standard-impl', version: '1.2.5'
+    // https://mvnrepository.com/artifact/jakarta.servlet.jsp.jstl/jakarta.servlet.jsp.jstl-api
+    runtimeOnly group: 'jakarta.servlet.jsp.jstl:jakarta.servlet.jsp.jstl-api:3.0.2' 
+    // https://mvnrepository.com/artifact/org.glassfish.web/jakarta.servlet.jsp.jstl
+    runtimeOnly group: 'org.glassfish.web', name: 'jakarta.servlet.jsp.jstl', version: '3.0.1'
 }
 
 // publishing with './gradlew publish'

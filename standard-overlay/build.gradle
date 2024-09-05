@@ -1,21 +1,31 @@
-apply plugin: 'java'
-apply plugin: 'war'
-apply plugin: "io.freefair.war-overlay"
-apply plugin: 'maven-publish'
+plugins {
+    id 'java'
+    id 'war'
+    id 'maven-publish'
+}
 
-sourceCompatibility = 1.8
-targetCompatibility = 1.8
+apply plugin: 'io.freefair.war-overlay'
+
+java {
+    toolchain {
+        languageVersion = JavaLanguageVersion.of(17)
+    }
+}
 
 dependencies {
     runtimeOnly group: 'org.apache.activemq', name: 'activemq-jdbc-store', version: projectVersion
 
     // https://mvnrepository.com/artifact/org.apache.derby/derby
+    // note that derby 10.17+ requires Java 21
     def derbyVersion = '10.16.1.1'
     runtimeOnly group: 'org.apache.derby', name: 'derby', version: derbyVersion
     runtimeOnly group: 'org.apache.derby', name: 'derbyclient', version: derbyVersion
     runtimeOnly group: 'org.apache.derby', name: 'derbynet', version: derbyVersion
+    runtimeOnly group: 'org.apache.derby', name: 'derbytools', version: derbyVersion
     // https://mvnrepository.com/artifact/org.apache.commons/commons-dbcp2
-    runtimeOnly group: 'org.apache.commons', name: 'commons-dbcp2', version: '2.9.0'
+    runtimeOnly(group: 'org.apache.commons', name: 'commons-dbcp2', version: '2.12.0') {
+        exclude module: 'commons-logging'
+    }
 
     // I don't know why, but Derby doesn't work without all (or, some, at
     // least) of the Locale dependencies.
@@ -34,7 +44,13 @@ dependencies {
     runtimeOnly group: 'org.apache.derby', name: 'derbyLocale_zh_TW', version: derbyVersion
 
     // https://mvnrepository.com/artifact/jakarta.xml.bind/jakarta.xml.bind-api
-    runtimeOnly 'jakarta.xml.bind:jakarta.xml.bind-api:2.3.3'
+    runtimeOnly 'jakarta.xml.bind:jakarta.xml.bind-api:4.0.2'
+
+    // https://mvnrepository.com/artifact/ch.qos.logback/logback-classic
+    runtimeOnly 'ch.qos.logback:logback-classic:1.5.7'
+
+    // https://mvnrepository.com/artifact/org.slf4j/slf4j-api
+    runtimeOnly 'org.slf4j:slf4j-api:2.0.16'
 }
 
 war {
@@ -42,7 +58,12 @@ war {
     overlays {
         activemq {
             from "org.apache.activemq:activemq-web-console:$projectVersion@war"
-            excludes = ["WEB-INF/activemq.xml"]
+            excludes = [
+                "WEB-INF/activemq.xml",
+                "WEB-INF/lib/commons-logging*.jar",
+                // don't introduce Jetty dependencies via Jetty websocket JARs
+                "WEB-INF/lib/websocket-*.jar"
+            ]
         }
     }
 }

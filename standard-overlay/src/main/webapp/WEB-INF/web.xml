@@ -16,10 +16,10 @@
     limitations under the License.
 -->
 
-<web-app xmlns="http://java.sun.com/xml/ns/javaee"
-      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-      xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd"
-      version="3.0"> 
+<web-app xmlns="https://jakarta.ee/xml/ns/jakartaee"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="https://jakarta.ee/xml/ns/jakartaee https://jakarta.ee/xml/ns/jakartaee/web-app_5_0.xsd"
+         version="5.0">
 
   <description>
     Apache ActiveMQ Web Console
@@ -111,7 +111,7 @@
   <!-- JNDI Stuff
 <resource-ref>
  <res-ref-name>jms/connectionFactory</res-ref-name>
- <res-type>javax.jms.ConnectionFactory</res-type>
+ <res-type>jakarta.jms.ConnectionFactory</res-type>
  <res-auth>Container</res-auth>
  </resource-ref>
  <resource-ref>
@@ -124,15 +124,12 @@
   <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
   <!--         Factor out common headers in JSP pages            -->
   <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
-  <!-- Removing the auto prelude as long as the workaround is in place -->
-  <!-- 
   <jsp-config>
     <jsp-property-group>
       <url-pattern>*.jsp</url-pattern>
       <include-prelude>/WEB-INF/jspf/headertags.jspf</include-prelude>
     </jsp-property-group>
   </jsp-config>
-  -->
   
   <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~ -->
   <!--         Error pages       -->
@@ -187,5 +184,5 @@
   <security-role>
      <role-name>amq-admin</role-name>
   </security-role>
-  
+ 
 </web-app>
